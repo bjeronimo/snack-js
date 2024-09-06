@@ -58,9 +58,21 @@ function iniciarGame() {
  * @returns {void}
  */
 function atualizarGame() {
+  console.log("atualizarGame() :: Atualizando jogo")
+
   atualizarCoordenadasDaCobra();
   desenharEstadoDoGame();
   configurarLoop();
+
+  if (verificarColisaoComComida()) {
+    console.log("atualizarGame() :: Colisão com comida :: ")
+    aumentarCaudaDaCobra()
+
+    if (gameTemEspacoParaGerarComida()) {
+      console.log("atualizarGame() :: Colisão com comida :: ")
+      gerarComida()
+    }
+  }
 }
 
 function configurarLoop() {
@@ -213,6 +225,28 @@ function gerarPosicaoAleatoriaNoCanva() {
 
 function foiGeradoComidaDentroDaCobra(cobra, novaComida) {
   return cobra.corpo.some(parteDaCobra => (parteDaCobra.x === novaComida.x && parteDaCobra.y === novaComida.y))
+}
+
+function verificarColisaoComComida() {
+  const {cobra, comida} = gameEstado;
+  return cobra.corpo[0].x === comida.x && cobra.corpo[0].y === comida.y
+}
+
+function gameTemEspacoParaGerarComida() {
+  const {cobra} = gameEstado;
+  const {dimensoesCanva} = configuracoes;
+  return cobra.corpo.length < dimensoesCanva.largura * dimensoesCanva.altura
+}
+
+function aumentarCaudaDaCobra() {
+  const {cobra} = gameEstado;
+
+  // Faz com que a ponta da cauda fique na sua última posição ("parada") por mais um loop,
+  // após a cabeça andar, estendendo a cauda da cobra
+  cobra.corpo.push({
+    x: cobra.corpo[cobra.corpo.length - 1].x,
+    y: cobra.corpo[cobra.corpo.length - 1].y
+  })
 }
 
 /**
