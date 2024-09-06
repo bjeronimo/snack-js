@@ -35,6 +35,8 @@ const configuracoes = {
     altura: 15,
     tamanhoPosicao: 40
   },
+  loop: undefined,
+  velocidade: 500, //ms
 }
 
 /**
@@ -56,7 +58,13 @@ function iniciarGame() {
  * @returns {void}
  */
 function atualizarGame() {
+  atualizarCoordenadasDaCobra();
   desenharEstadoDoGame();
+  configurarLoop();
+}
+
+function configurarLoop() {
+  configuracoes.loop = setTimeout(atualizarGame, configuracoes.velocidade)
 }
 
 /**
@@ -88,6 +96,36 @@ function configurarEventosDeTeclado() {
         break
     }
   })
+}
+
+function atualizarCoordenadasDaCobra() {
+  const {cobra, eventos} = gameEstado
+
+  const novaPosicao = {
+    x: cobra.corpo[0].x,
+    y: cobra.corpo[0].y
+  }
+
+  // Atualiza as coordenadas da cabeça da cobra
+  switch (eventos.ultimaTeclaPressionada) {
+    case 'ArrowDown':
+      novaPosicao.y++
+      break
+    case 'ArrowUp':
+      novaPosicao.y--
+      break
+    case 'ArrowLeft':
+      novaPosicao.x--
+      break
+    case 'ArrowRight':
+      novaPosicao.x++
+      break
+    default:
+      return;
+  }
+
+  cobra.corpo.unshift(novaPosicao) // Adiciona a nova cabeça da cobra no começo do corpo
+  cobra.corpo.pop() // Remove a última posição do corpo da cobra
 }
 
 /**
