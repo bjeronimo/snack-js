@@ -29,7 +29,7 @@ O Snack Game é uma implementação clássica do jogo da cobrinha, onde o jogado
 - [x] Tarefa 06: adicionar nova comida :: após comer o pixel, uma nova comida deverá ser exibida no jogo
 - [x] Tarefa 07: após movimento, obter posição da cobra e verificar se ela bateu na parede
 - [x] Tarefa 08: após movimento, obter a posição da cobra e verificar se ela bateu nela mesma. Caso a cabeça da cobra coincida com o corpo da cobra, ela morre.
-- [ ] Tarefa 09: assegurar que a cobra não dá ré :: o dev deverá assegurar que a só poderá seguir por uma mesma direção. caso o usuário tente voltar, ele avança um pixel na mesma direção.
+- [x] Tarefa 09: assegurar que a cobra não dá ré :: o dev deverá assegurar que a só poderá seguir por uma mesma direção. caso o usuário tente voltar, ele avança um pixel na mesma direção.
 
 
 ## Como Contribuir
