@@ -113,18 +113,39 @@ function configurarEventosDeTeclado() {
     switch (event.key) {
       case 'ArrowDown':
         console.log("configurarEventosDeTeclado() :: Usuário pressionou a tecla arrow-down")
+
+        if (cobraEstaViradaParaCima()) {
+          break;
+        }
+
         eventos.ultimaTeclaPressionada = event.key
+
         break
       case 'ArrowUp':
         console.log("configurarEventosDeTeclado() :: Usuário pressionou a tecla arrow-up")
+
+        if (cobraEstaViradaParaBaixo()) {
+          break;
+        }
+
         eventos.ultimaTeclaPressionada = event.key
         break
       case 'ArrowLeft':
         console.log("configurarEventosDeTeclado() ::  Usuário pressionou a tecla arrow-left")
+
+        if (cobraEstaViradaParaDireita()) {
+          break;
+        }
+
         eventos.ultimaTeclaPressionada = event.key
         break
       case 'ArrowRight':
         console.log("configurarEventosDeTeclado() ::  Usuário pressionou a tecla arrow-right")
+
+        if (cobraEstaViradaParaEsquerda()) {
+          break;
+        }
+
         eventos.ultimaTeclaPressionada = event.key
         break
     }
@@ -289,6 +310,26 @@ function verificarColisaoComCauda() {
       return true
 
   return false
+}
+
+function cobraEstaViradaParaCima() {
+  const {cobra} = gameEstado;
+  return cobra.corpo.length > 1 && cobra.corpo[0].y === cobra.corpo[1].y - 1;
+}
+
+function cobraEstaViradaParaBaixo() {
+  const {cobra} = gameEstado;
+  return cobra.corpo.length > 1 && cobra.corpo[0].y === cobra.corpo[1].y + 1
+}
+
+function cobraEstaViradaParaEsquerda() {
+  const {cobra} = gameEstado;
+  return cobra.corpo.length > 1 && cobra.corpo[0].x === cobra.corpo[1].x - 1
+}
+
+function cobraEstaViradaParaDireita() {
+  const {cobra} = gameEstado;
+  return cobra.corpo.length > 1 && cobra.corpo[0].x === cobra.corpo[1].x + 1
 }
 
 /**
