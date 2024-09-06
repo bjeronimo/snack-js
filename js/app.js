@@ -36,7 +36,7 @@ const configuracoes = {
     tamanhoPosicao: 40
   },
   loop: undefined,
-  velocidade: 500, //ms
+  velocidade: 100, //ms
 }
 
 /**
@@ -60,9 +60,9 @@ function iniciarGame() {
 function atualizarGame() {
   console.log("atualizarGame() :: Atualizando jogo")
 
+  configurarLoop();
   atualizarCoordenadasDaCobra();
   desenharEstadoDoGame();
-  configurarLoop();
 
   if (verificarColisaoComComida()) {
     console.log("atualizarGame() :: Colisão com comida :: ")
@@ -156,9 +156,9 @@ function desenharCanvas() {
 }
 
 function desenharEstadoDoGame() {
-  limparCanvas()
-  desenharCobra()
+  limparCanvas();
   desenharComida();
+  desenharCobra();
 }
 
 function limparCanvas() {
