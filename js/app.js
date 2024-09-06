@@ -16,6 +16,9 @@ const gameEstado = {
     altura: 20,
     tamanho: 10
   },
+  eventos: {
+    ultimaTeclaPressionada: undefined,
+  }
 }
 
 /**
@@ -56,7 +59,35 @@ function atualizarGame() {
   desenharEstadoDoGame();
 }
 
+/**
+ * Configura os eventos de teclado para controlar o movimento da cobra.
+ *
+ * @function configurarEventosDeTeclado
+ * @returns {void}
+ */
 function configurarEventosDeTeclado() {
+  window.addEventListener('keydown', function (event) {
+    const {eventos} = gameEstado;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        console.log("configurarEventosDeTeclado() :: Usuário pressionou a tecla arrow-down")
+        eventos.ultimaTeclaPressionada = event.key
+        break
+      case 'ArrowUp':
+        console.log("configurarEventosDeTeclado() :: Usuário pressionou a tecla arrow-up")
+        eventos.ultimaTeclaPressionada = event.key
+        break
+      case 'ArrowLeft':
+        console.log("configurarEventosDeTeclado() ::  Usuário pressionou a tecla arrow-left")
+        eventos.ultimaTeclaPressionada = event.key
+        break
+      case 'ArrowRight':
+        console.log("configurarEventosDeTeclado() ::  Usuário pressionou a tecla arrow-right")
+        eventos.ultimaTeclaPressionada = event.key
+        break
+    }
+  })
 }
 
 /**
