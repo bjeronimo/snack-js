@@ -51,6 +51,13 @@ function iniciarGame() {
   atualizarGame()
 }
 
+function finalizarGame(message) {
+  console.log("finalizarGame() :: Finalizando jogo")
+  limparLoop();
+  limparCanvas();
+  alert(message)
+}
+
 /**
  * Atualiza o estado do jogo.
  * Esta função é chamada periodicamente para atualizar o estado do jogo.
@@ -65,14 +72,28 @@ function atualizarGame() {
   desenharEstadoDoGame();
 
   if (verificarColisaoComComida()) {
-    console.log("atualizarGame() :: Colisão com comida :: ")
+    console.log("atualizarGame() :: Colisão com comida ")
     aumentarCaudaDaCobra()
 
     if (gameTemEspacoParaGerarComida()) {
-      console.log("atualizarGame() :: Colisão com comida :: ")
+      console.log("atualizarGame() :: Gerando nova comida ")
       gerarComida()
     }
   }
+
+  if (verificarColisaoComParede()) {
+    console.log("atualizarGame() :: Colisão com parede ")
+    finalizarGame("Cobra colidiu com parede! Você perdeu!")
+  }
+
+  if (verificarColisaoComCauda()) {
+    console.log("atualizarGame() :: Colisão com cauda ")
+    finalizarGame("Cobra colidiu com cauda! Você perdeu!")
+  }
+}
+
+function limparLoop() {
+  clearTimeout(configuracoes.loop)
 }
 
 function configurarLoop() {
@@ -239,6 +260,8 @@ function gameTemEspacoParaGerarComida() {
 }
 
 function aumentarCaudaDaCobra() {
+  console.log("atualizarGame() :: Aumentando cauda da cobra ")
+
   const {cobra} = gameEstado;
 
   // Faz com que a ponta da cauda fique na sua última posição ("parada") por mais um loop,
@@ -247,6 +270,25 @@ function aumentarCaudaDaCobra() {
     x: cobra.corpo[cobra.corpo.length - 1].x,
     y: cobra.corpo[cobra.corpo.length - 1].y
   })
+}
+
+function verificarColisaoComParede() {
+  const {cobra} = gameEstado;
+  const {dimensoesCanva} = configuracoes;
+  return cobra.corpo[0].x < 0 || cobra.corpo[0].x >= dimensoesCanva.largura || cobra.corpo[0].y < 0 || cobra.corpo[0].y >= dimensoesCanva.altura
+}
+
+function verificarColisaoComCauda() {
+  const {cobra} = gameEstado;
+
+  if (cobra.corpo.length < 5) // Não é possível a cobra bater nela mesma com o tamanho < 5
+    return false
+
+  for (let i = 1; i < cobra.corpo.length; i++)
+    if (cobra.corpo[0].x === cobra.corpo[i].x && cobra.corpo[0].y === cobra.corpo[i].y)
+      return true
+
+  return false
 }
 
 /**
